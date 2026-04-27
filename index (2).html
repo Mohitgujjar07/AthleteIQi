@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AthleteIQ — AI-powered fitness and nutrition coach. Get personalized workout plans, meal plans, calorie tracking, and AI coaching for your fitness goals.">
+    <meta name="keywords" content="fitness, nutrition, AI coach, workout planner, meal plan, calorie tracker, health app">
+    <meta name="author" content="AthleteIQ Team">
+    <meta name="theme-color" content="#2D6A4F">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://www.google-analytics.com https://firestore.googleapis.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com;">
+    <meta property="og:title" content="AthleteIQ — AI Fitness &amp; Food Coach">
+    <meta property="og:description" content="Personalized AI-powered fitness and nutrition coaching platform">
+    <meta property="og:type" content="website">
+    <title>AthleteIQ — Fitness &amp; Food Coach</title>
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Structured Data for Google -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AthleteIQ",
+        "description": "AI-powered fitness and nutrition coaching platform",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Skip Navigation Link (Accessibility) -->
+    <a href="#main-content" class="skip-nav" id="skip-nav">Skip to main content</a>
+
+    <!-- LOADER -->
+    <div class="loader-overlay" id="loader" role="alert" aria-live="assertive" aria-label="Loading application">
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <div class="loader-text">Loading your fitness profile…</div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">✅ <span id="toast-msg">Done!</span></div>
+
+    <div class="app" role="application">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+            <div class="logo" aria-label="AthleteIQ Home">
+                <div class="logo-icon" aria-hidden="true">⚡</div>
+                AthleteIQ
+            </div>
+
+            <nav aria-label="Primary">
+                <div class="nav-section-label" id="nav-main-label">Main</div>
+                <div class="nav-item active" onclick="showPage('dashboard', this)" tabindex="0" role="button" aria-current="page" onkeydown="if(event.key==='Enter')this.click()">
+                    <span class="nav-icon" aria-hidden="true">🏠</span> Dashboard
+                </div>
+                <div class="nav-item" onclick="showPage('workout', this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter')this.click()">
+                    <span class="nav-icon" aria-hidden="true">🏋️</span> Workout Plan
+                </div>
+                <div class="nav-item" onclick="showPage('nutrition', this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter')this.click()">
+                    <span class="nav-icon" aria-hidden="true">🥗</span> Nutrition
+                </div>
+                <div class="nav-item" onclick="showPage('progress', this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter')this.click()">
+                    <span class="nav-icon" aria-hidden="true">📈</span> Progress
+                </div>
+
+                <div class="nav-section-label" id="nav-coach-label">Coach</div>
+                <div class="nav-item" onclick="showPage('coach', this)" tabindex="0" role="button" onkeydown="if(event.key==='Enter')this.click()">
+                    <span class="nav-icon" aria-hidden="true">🤖</span> AI Coach
+                    <span class="nav-badge" aria-label="AI Powered">AI</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-profile" aria-label="User Profile">
+                <div class="avatar" aria-hidden="true">MJ</div>
+                <div>
+                    <div class="profile-name">Mohit Gujjar</div>
+                    <div class="profile-goal">🎯 Bulk &amp; Strength</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main" id="main-content" role="main" aria-label="Main Content">
+
+            <!-- ══ DASHBOARD ══ -->
+            <div class="page active" id="page-dashboard">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Good morning, Mohit 👋</div>
+                        <div class="page-sub">Monday · Week 12 of your program · Keep crushing it!</div>
+                    </div>
+                    <button class="header-btn"
+                        onclick="showPage('workout', document.querySelector('.nav-item:nth-child(5)'))">Today's Workout →</button>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon" style="background:#F0FAF2">🔥</div>
+                            <span class="stat-change stat-up">+12%</span>
+                        </div>
+                        <div class="stat-val">2,340<span class="stat-unit"> kcal</span></div>
+                        <div class="stat-label">Calories Today</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width:72%;background:var(--green)"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon" style="background:#FFF0EA">💪</div>
+                            <span class="stat-change stat-up">+5g</span>
+                        </div>
+                        <div class="stat-val">182<span class="stat-unit"> g</span></div>
+                        <div class="stat-label">Protein Today</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width:84%;background:var(--accent)"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon" style="background:#EBF4FF">🏃</div>
+                            <span class="stat-change stat-up">On track</span>
+                        </div>
+                        <div class="stat-val">6<span class="stat-unit"> / 7</span></div>
+                        <div class="stat-label">Workouts This Week</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width:86%;background:var(--blue)"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon" style="background:#FFF8E6">⚖️</div>
+                            <span class="stat-change stat-down">-0.5kg</span>
+                        </div>
+                        <div class="stat-val">78.5<span class="stat-unit"> kg</span></div>
+                        <div class="stat-label">Body Weight</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width:60%;background:var(--yellow)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-grid">
+                    <!-- Macro Ring -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">🎯</span> Today's Macros</div>
+                        <div class="calorie-wrap">
+                            <div class="ring-svg-wrap">
+                                <svg width="110" height="110" viewBox="0 0 110 110" aria-label="Calorie ring: 2340 of 3000 kcal" role="img">
+                                    <circle cx="55" cy="55" r="46" fill="none" stroke="#E8EAE3" stroke-width="9" />
+                                    <circle cx="55" cy="55" r="46" fill="none" stroke="#2D6A4F" stroke-width="9"
+                                        stroke-dasharray="289" stroke-dashoffset="80" stroke-linecap="round" />
+                                </svg>
+                                <div class="ring-label">
+                                    <div class="ring-num">2340</div>
+                                    <div class="ring-sub">/ 3000 kcal</div>
+                                </div>
+                            </div>
+                            <div class="macro-list">
+                                <div class="macro-row">
+                                    <div class="macro-name">Protein</div>
+                                    <div class="macro-bar-bg">
+                                        <div class="macro-bar-fill" style="width:84%;background:var(--accent)"></div>
+                                    </div>
+                                    <div class="macro-g">182g</div>
+                                </div>
+                                <div class="macro-row">
+                                    <div class="macro-name">Carbs</div>
+                                    <div class="macro-bar-bg">
+                                        <div class="macro-bar-fill" style="width:65%;background:var(--yellow)"></div>
+                                    </div>
+                                    <div class="macro-g">260g</div>
+                                </div>
+                                <div class="macro-row">
+                                    <div class="macro-name">Fat</div>
+                                    <div class="macro-bar-bg">
+                                        <div class="macro-bar-fill" style="width:58%;background:var(--blue)"></div>
+                                    </div>
+                                    <div class="macro-g">68g</div>
+                                </div>
+                                <div class="macro-row">
+                                    <div class="macro-name">Fiber</div>
+                                    <div class="macro-bar-bg">
+                                        <div class="macro-bar-fill" style="width:70%;background:var(--green)"></div>
+                                    </div>
+                                    <div class="macro-g">28g</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Meals -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">🍽️</span> Today's Meals</div>
+                        <div class="meal-list">
+                            <div class="meal-item">
+                                <div class="meal-emoji">🥣</div>
+                                <div class="meal-info">
+                                    <div class="meal-name">Oats + Protein Shake</div>
+                                    <div class="meal-time">7:30 AM · Breakfast</div>
+                                </div>
+                                <div class="meal-cal">540 kcal</div>
+                            </div>
+                            <div class="meal-item">
+                                <div class="meal-emoji">🍗</div>
+                                <div class="meal-info">
+                                    <div class="meal-name">Grilled Chicken + Rice</div>
+                                    <div class="meal-time">12:00 PM · Lunch</div>
+                                </div>
+                                <div class="meal-cal">720 kcal</div>
+                            </div>
+                            <div class="meal-item">
+                                <div class="meal-emoji">🥚</div>
+                                <div class="meal-info">
+                                    <div class="meal-name">Eggs + Avocado Toast</div>
+                                    <div class="meal-time">3:30 PM · Snack</div>
+                                </div>
+                                <div class="meal-cal">420 kcal</div>
+                            </div>
+                            <div class="meal-item"
+                                style="border:1.5px dashed var(--border); background:transparent; opacity:.6;">
+                                <div class="meal-emoji">🍝</div>
+                                <div class="meal-info">
+                                    <div class="meal-name">Pasta + Salmon (planned)</div>
+                                    <div class="meal-time">7:30 PM · Dinner</div>
+                                </div>
+                                <div class="meal-cal">660 kcal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-grid-3">
+                    <!-- Water -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">💧</span> Water Intake</div>
+                        <div class="water-cups" id="water-cups" role="group" aria-label="Water intake tracker"></div>
+                        <div class="water-label" id="water-label">5 / 8 glasses · 1.25L</div>
+                    </div>
+
+                    <!-- Sleep -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">😴</span> Last Night's Sleep</div>
+                        <div class="sleep-display">
+                            <div class="sleep-num">7.5</div>
+                            <div class="sleep-unit">hours</div>
+                            <div class="sleep-quality">Good Quality</div>
+                        </div>
+                    </div>
+
+                    <!-- Streak -->
+                    <div class="streak-card">
+                        <div class="card-title" style="color:rgba(255,255,255,.8);margin-bottom:8px"><span aria-hidden="true">🔥</span>
+                            Workout Streak</div>
+                        <div class="streak-num">12</div>
+                        <div class="streak-label">days in a row</div>
+                        <div class="streak-days" id="streak-days" aria-label="Last 7 days streak"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ WORKOUT ══ -->
+            <div class="page" id="page-workout">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Workout Plan 🏋️</div>
+                        <div class="page-sub">Strength + Cardio · 6 days/week · Intermediate level</div>
+                    </div>
+                    <button class="header-btn" onclick="showToast('Workout logged! 💪')">Log Workout</button>
+                </div>
+
+                <div class="workout-header-row">
+                    <div class="card" style="display:flex;align-items:center;gap:16px">
+                        <div style="font-size:2.5rem" aria-hidden="true">🎯</div>
+                        <div>
+                            <div style="font-weight:700;color:var(--text)">This Week's Goal</div>
+                            <div style="font-size:.85rem;color:var(--muted);margin-top:4px">Increase bench press by 5kg
+                                · Run 5km in &lt;25min</div>
+                        </div>
+                    </div>
+                    <div class="card" style="display:flex;align-items:center;gap:16px">
+                        <div style="font-size:2.5rem" aria-hidden="true">⏱️</div>
+                        <div>
+                            <div style="font-weight:700;color:var(--text)">Avg. Session Time</div>
+                            <div style="font-size:1.4rem;font-weight:700;color:var(--green);margin-top:2px">62 <span
+                                    style="font-size:.85rem;font-weight:400;color:var(--muted)">minutes</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-tabs" role="tablist" aria-label="Workout days">
+                    <div class="day-tab active" onclick="setDay(this,'Mon')" role="tab" tabindex="0" aria-selected="true" onkeydown="if(event.key==='Enter')this.click()">Mon · Chest</div>
+                    <div class="day-tab" onclick="setDay(this,'Tue')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Tue · Back</div>
+                    <div class="day-tab" onclick="setDay(this,'Wed')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Wed · Legs</div>
+                    <div class="day-tab" onclick="setDay(this,'Thu')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Thu · Cardio</div>
+                    <div class="day-tab" onclick="setDay(this,'Fri')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Fri · Shoulders</div>
+                    <div class="day-tab" onclick="setDay(this,'Sat')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Sat · Arms</div>
+                    <div class="day-tab" onclick="setDay(this,'Sun')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">Sun · Rest</div>
+                </div>
+
+                <div class="workout-grid" id="workout-grid" role="list" aria-label="Exercises for selected day"></div>
+            </div>
+
+            <!-- ══ NUTRITION ══ -->
+            <div class="page" id="page-nutrition">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Nutrition Coach 🥗</div>
+                        <div class="page-sub">All diet styles · High protein · Bulking &amp; cutting plans</div>
+                    </div>
+                    <button class="header-btn" onclick="showToast('Meal plan saved! 🍽️')">Save Plan</button>
+                </div>
+
+                <div class="diet-tabs" role="tablist" aria-label="Diet type">
+                    <div class="diet-tab active" onclick="setDiet(this,'bulk')" role="tab" tabindex="0" aria-selected="true" onkeydown="if(event.key==='Enter')this.click()">🔺 Bulking</div>
+                    <div class="diet-tab" onclick="setDiet(this,'cut')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">🔻 Cutting</div>
+                    <div class="diet-tab" onclick="setDiet(this,'maintain')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">⚖️ Maintain</div>
+                    <div class="diet-tab" onclick="setDiet(this,'keto')" role="tab" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">🥑 Keto</div>
+                </div>
+
+                <div class="nutrition-grid">
+                    <!-- Food Recommendations -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">⭐</span> Top Foods for Your Goal</div>
+                        <div class="food-recommend-list" id="food-rec-list"></div>
+                    </div>
+
+                    <!-- Nutrient targets -->
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">🎯</span> Daily Targets</div>
+                        <div id="nutrient-targets"></div>
+                    </div>
+                </div>
+
+                <!-- Meal Plan -->
+                <div class="card">
+                    <div class="card-title"><span class="card-title-icon">📅</span> Weekly Meal Plan</div>
+                    <div id="meal-plan-grid"></div>
+                </div>
+            </div>
+
+            <!-- ══ PROGRESS ══ -->
+            <div class="page" id="page-progress">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Progress Tracker 📈</div>
+                        <div class="page-sub">Track your PRs, body weight, and fitness milestones</div>
+                    </div>
+                    <button class="header-btn" onclick="logWeight()">Log Today</button>
+                </div>
+
+                <div class="progress-grid">
+                    <div class="chart-card">
+                        <div class="card-title"><span class="card-title-icon">⚖️</span> Body Weight (last 8 weeks)</div>
+                        <div class="chart-container"><canvas id="weightChart" aria-label="Body weight chart over 8 weeks" role="img"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-title"><span class="card-title-icon">🔥</span> Weekly Calories (avg)</div>
+                        <div class="chart-container"><canvas id="calChart" aria-label="Weekly average calorie chart" role="img"></canvas></div>
+                    </div>
+                </div>
+
+                <div class="dash-grid">
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">🏆</span> Personal Records</div>
+                        <div class="pr-list" id="pr-list"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title"><span class="card-title-icon">📊</span> Body Composition</div>
+                        <div id="body-comp"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ AI COACH ══ -->
+            <div class="page" id="page-coach">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">AI Coach 🤖</div>
+                        <div class="page-sub">Your personal fitness &amp; nutrition AI — ask anything</div>
+                    </div>
+                </div>
+
+                <div class="coach-layout">
+                    <!-- Chat -->
+                    <div class="chat-card" role="region" aria-label="AI Coach Chat">
+                        <div class="chat-header">
+                            <div class="coach-avatar" aria-hidden="true">🤖</div>
+                            <div>
+                                <div class="coach-name">AthleteIQ Coach</div>
+                                <div class="coach-status"><span class="status-dot" aria-hidden="true"></span> Online · Powered by Claude AI
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                            <div class="msg bot">
+                                <div class="msg-bubble">Hey Mohit! 👋 I'm your AI fitness &amp; food coach. I know you're
+                                    targeting <strong>bulk + strength</strong> with a <strong>strength + cardio</strong>
+                                    program. Ask me anything — workout tips, meal plans, nutrient breakdowns, or
+                                    recovery advice!</div>
+                                <div class="msg-time">Just now</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-row">
+                            <label for="chat-input" class="visually-hidden">Message to AI Coach</label>
+                            <input class="chat-input" id="chat-input" placeholder="Ask your coach anything…"
+                                onkeydown="if(event.key==='Enter')sendChat()" aria-label="Message to AI Coach">
+                            <button class="send-btn" onclick="sendChat()" aria-label="Send message">➤</button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Prompts -->
+                    <div role="complementary" aria-label="Quick question suggestions">
+                        <div
+                            style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px">
+                            Quick Questions</div>
+                        <div class="quick-prompts">
+                            <div class="quick-prompt-card" role="button" tabindex="0"
+                                onclick="askQuick('What should I eat before a heavy lifting session?')"
+                                onkeydown="if(event.key==='Enter')this.click()">
+                                <div class="qp-icon" aria-hidden="true">🍌</div>
+                                <div class="qp-title">Pre-workout nutrition</div>
+                                <div class="qp-desc">Best foods before heavy lifting</div>
+                            </div>
+                            <div class="quick-prompt-card" role="button" tabindex="0"
+                                onclick="askQuick('How much protein do I need daily for bulking at 78.5kg?')"
+                                onkeydown="if(event.key==='Enter')this.click()">
+                                <div class="qp-icon" aria-hidden="true">💪</div>
+                                <div class="qp-title">Protein calculator</div>
+                                <div class="qp-desc">Daily protein needs for my goal</div>
+                            </div>
+                            <div class="quick-prompt-card" role="button" tabindex="0"
+                                onclick="askQuick('Give me a 5-day strength + cardio weekly split for an intermediate athlete')"
+                                onkeydown="if(event.key==='Enter')this.click()">
+                                <div class="qp-icon" aria-hidden="true">🗓️</div>
+                                <div class="qp-title">Weekly split plan</div>
+                                <div class="qp-desc">Optimal strength + cardio schedule</div>
+                            </div>
+                            <div class="quick-prompt-card" role="button" tabindex="0"
+                                onclick="askQuick('What are the best recovery foods after an intense workout?')"
+                                onkeydown="if(event.key==='Enter')this.click()">
+                                <div class="qp-icon" aria-hidden="true">🔄</div>
+                                <div class="qp-title">Recovery nutrition</div>
+                                <div class="qp-desc">Best post-workout foods</div>
+                            </div>
+                            <div class="quick-prompt-card" role="button" tabindex="0"
+                                onclick="askQuick('I feel tired and low energy. What nutrients might I be missing?')"
+                                onkeydown="if(event.key==='Enter')this.click()">
+                                <div class="qp-icon" aria-hidden="true">⚡</div>
+                                <div class="qp-title">Energy &amp; fatigue</div>
+                                <div class="qp-desc">Nutrients for more energy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>
